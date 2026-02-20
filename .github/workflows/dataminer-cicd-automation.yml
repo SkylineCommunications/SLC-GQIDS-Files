@@ -1,4 +1,4 @@
-name: DataMiner CICD Automation
+name: Skyline Reusable Quality Workflow
 
 # Controls when the workflow will run
 on:
@@ -8,6 +8,8 @@ on:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+.[0-9]+"
       - "[0-9]+.[0-9]+.[0-9]+.[0-9]+-**"
+      - "[0-9]+.[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+.[0-9]+-**"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,19 +18,12 @@ on:
 jobs:
 
   CI:
-    uses: SkylineCommunications/Low-Code-App-Editor/.github/workflows/Automation Master SDK Workflow.yml@main
+    uses: SkylineCommunications/_ReusableWorkflows/.github/workflows/DataMiner App Packages Master Workflow.yml@main
     with:
-      referenceName: ${{ github.ref_name }}
-      runNumber: ${{ github.run_number }}
-      referenceType: ${{ github.ref_type }}
-      repository: ${{ github.repository }}
-      owner: ${{ github.repository_owner }}
-      sonarCloudProjectName: SkylineCommunications_SLC-AS-GQI-Files
-      catalog-identifier: e998cc91-dc94-4d84-8d72-8daac9c8b123
-      catalog-manifest-path: Documentation/CATALOG_PRIVATE_MANIFEST.yml
-      catalog-readme-path: Documentation/CATALOG_PRIVATE_README.md
-    secrets:
-      # The API-key: generated in the DCP Admin app (https://admin.dataminer.services/) as authentication for a certain DataMiner System.
-      api-key: ${{ secrets.DATAMINER_DEPLOY_KEY }}
-      sonarCloudToken: ${{ secrets.SONAR_TOKEN }}
-
+      configuration: Release
+      sonarCloudProjectName: ${{ vars.SONAR_NAME }} # Go to 'https://sonarcloud.io/projects/create' and create a project. Then create a SONAR_NAME variable with the ID of the project as mentioned in the SonarCloud project URL.
+      # solutionFilterName: "MySolutionFilter.slnf"
+    # secrets:
+      # The API key: generated in the DCP Admin app (https://admin.dataminer.services/) as authentication for a certain organization.
+      # dataminerToken: ${{ secrets.DATAMINER_TOKEN }} # Only needed when uploading to the Catalog for a different organization than Skyline Communications
+      # overrideCatalogDownloadToken: ${{ secrets.OVERRIDE_DATAMINER_TOKEN }} # Override on the dataminerToken for downloading Catalog items: generated in the DCP Admin app (https://admin.dataminer.services/) as authentication for a certain organization.
