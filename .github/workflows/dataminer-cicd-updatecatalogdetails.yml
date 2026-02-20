@@ -1,0 +1,38 @@
+name: DataMiner CICD Update Catalog Details
+
+# Controls when the workflow will run
+on:
+  # push:
+  #   branches:
+  #     - main
+  #     - master
+
+  ## If you wish to only trigger on ReadMe changes. 
+  ## Consider: https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  Catalog:
+    uses: SkylineCommunications/_ReusableWorkflows/.github/workflows/Update Catalog Details Workflow.yml@main
+    # secrets:
+      # These secrets are only required when:
+      # - The repository is not part of the SkylineCommunications GitHub Organization.
+      # - You want to publish to a DataMiner Catalog belonging to a different organization than Skyline Communications.
+
+      # The API key used for authentication with the DataMiner Catalog.
+      # Generate this key in the DCP Admin app: https://admin.dataminer.services/
+      # Uncomment when publishing to a Catalog of a different organization than Skyline Communications.
+      # api-key: ${{ secrets.DATAMINER_TOKEN }}
+
+      # Optional OIDC inputs, required only when running workflows from a repository
+      # outside of the SkylineCommunications GitHub Organization and you don't provide individual secrets.
+      #
+      # A prerequisite is an Azure Key Vault named `kv-master-cicd-secrets`,
+      # which must contain all required secrets as defined in the reusable workflows under `secret_names=...`.
+
+      # oidc-client-id: ${{ secrets.OIDC_CLIENT_ID }}
+      # oidc-tenant-id: ${{ secrets.OIDC_TENANT_ID }}
+      # oidc-subscription-id: ${{ secrets.OIDC_SUBSCRIPTION_ID }}
